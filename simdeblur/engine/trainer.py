@@ -254,8 +254,13 @@ class Trainer:
             "epochs": self.epochs + 1,
             "iters": self.iters + 1
         }
+        
+        # zzh: save 20 ckps in total
+        if self.epochs+1 not in list(range(0, self.total_train_epochs, self.total_train_epochs//20))+[self.total_train_epochs]:
+            return
+        ckpt_name = ckpt_name.format(self.epochs + 1)
 
-        ckpt_name = ckpt_name.format(self.epochs + 1) if dence_saving else "latest.pth"
+        # ckpt_name = ckpt_name.format(self.epochs + 1) if dence_saving else "latest.pth"
         if out_dir is None:
             out_dir = self.current_work_dir
         if not os.path.exists(out_dir):
